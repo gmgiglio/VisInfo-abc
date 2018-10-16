@@ -13,7 +13,7 @@ d3.tsv("data.tsv", type, function(error, data) {
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
     
   data.forEach(function(element){
-      element.divNum = 3;
+      element.divNum = 1;
   });
   
   var barWidth = width / data.length;
@@ -33,7 +33,7 @@ d3.tsv("data.tsv", type, function(error, data) {
   bar.append("rect")
       .attr("y", function(d) { return height - ((height - y(d.value)) / d.divNum); })
       .attr("height", function(d) { return (height - y(d.value)) / d.divNum ; })
-      .attr("width", barWidth - 1)
+      .attr("width", barWidth)
       .attr("class", "remaining-bar")
       .style("fill", function(d) { return d.color; });
       
@@ -65,7 +65,8 @@ function pasoDHondt(){
   maxd.divNum += 1;
   
   chart.selectAll("g")
-    .selectAll(".remaining-bar")
+    .selectAll(".remaining-bar").transition()
+    .duration(750)
     .attr("y", function(d) { return height - ((height - y(d.value)) / d.divNum); })
     .attr("height", function(d) { return (height - y(d.value)) / d.divNum ; });
    
